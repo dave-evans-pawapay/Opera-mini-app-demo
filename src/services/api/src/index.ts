@@ -17,4 +17,9 @@ app.use(httpLogger);
 
 app.use('/api', health, merchants, payments, settlements);
 
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('Unhandled API error', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
 app.listen(PORT, () => console.log(`API on :${PORT}`));
