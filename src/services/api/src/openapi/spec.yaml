@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: MiniPay × PawaPay Payments API
+  version: 0.1.0
+servers:
+  - url: /api
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200': { description: OK }
+  /merchants:
+    get:
+      summary: List merchants
+      responses:
+        '200': { description: OK }
+  /payments/quote:
+    get:
+      summary: Quote local -> stable
+      parameters:
+        - in: query
+          name: localAmount
+          required: true
+          schema: { type: number }
+        - in: query
+          name: localCurrency
+          schema: { type: string, default: RWF }
+        - in: query
+          name: stable
+          schema: { type: string, enum: [cUSD, USDC], default: cUSD }
+      responses:
+        '200': { description: OK }
+  /payments:
+    post:
+      summary: Create payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [merchantId, reference, msisdn, stablecoin]
+              properties:
+                merchantId: { type: string }
+                reference: { type: string }
+                localAmount: { type: number }
+                stableAmount: { type: number }
+                stablecoin: { type: string, enum: [cUSD, USDC] }
+                msisdn: { type: string }
+      responses:
+        '200': { description: Receipt }

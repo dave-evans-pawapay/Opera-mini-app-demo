@@ -1,0 +1,12 @@
+# deps & env
+node_modules/
+.env
+.env.*
+# builds
+dist/
+build/
+# logs
+logs/
+*.log
+# editor
+.DS_Store
