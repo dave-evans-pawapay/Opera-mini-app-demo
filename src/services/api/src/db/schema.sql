@@ -15,6 +15,7 @@ create table if not exists payments(
   msisdn text not null,
   stablecoin text not null,
   local_amount numeric,
+  local_currency text default 'RWF',
   stable_amount numeric not null,
   status text not null default 'submitted',
   tx_id text,
@@ -22,3 +23,5 @@ create table if not exists payments(
   fees numeric,
   created_at timestamp default now()
 );
+
+alter table if exists payments add column if not exists local_currency text default 'RWF';
